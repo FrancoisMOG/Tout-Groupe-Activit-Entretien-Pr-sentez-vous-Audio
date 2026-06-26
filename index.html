@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atelier Rédaction : Structure "Présentez-vous"</title>
+    <title>Atelier Complet : Rédaction & Audio "Présentez-vous"</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
@@ -15,19 +15,15 @@
             --text-color: #1f2937;
             --post-it-bg: #fef3c7;
             --post-it-shadow: rgba(0,0,0,0.1);
-            --primary-color: #3b82f6; /* Bleu actions */
-            --danger-color: #ef4444; /* Rouge suppression */
-            --success-color: #10b981; /* Vert validation */
+            --primary-color: #3b82f6;
+            --danger-color: #ef4444;
+            --success-color: #10b981;
             --header-bg: #111827;
             --header-text: #ffffff;
-            --input-bg: #ffffff;
+            --record-color: #dc2626;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             font-family: 'Open Sans', sans-serif;
@@ -39,9 +35,7 @@
             flex-direction: column;
         }
 
-        h1, h2, h3, .btn-text, .post-it-title, th, td {
-            font-family: 'Montserrat', sans-serif;
-        }
+        h1, h2, h3, .btn-text, .post-it-title, th, td, button { font-family: 'Montserrat', sans-serif; }
 
         /* --- HEADER --- */
         header {
@@ -59,15 +53,9 @@
             z-index: 100;
         }
 
-        h1 {
-            font-size: 1.4rem;
-            font-weight: 700;
-        }
+        h1 { font-size: 1.4rem; font-weight: 700; }
 
-        .controls {
-            display: flex;
-            gap: 0.8rem;
-        }
+        .controls { display: flex; gap: 0.8rem; flex-wrap: wrap; }
 
         button {
             padding: 0.6rem 1.2rem;
@@ -77,52 +65,38 @@
             cursor: pointer;
             transition: all 0.2s ease;
             font-size: 0.9rem;
-            font-family: 'Montserrat', sans-serif;
         }
 
         .btn-info { background-color: #6b7280; color: white; }
         .btn-reset { background-color: var(--danger-color); color: white; }
         .btn-check { background-color: var(--success-color); color: white; }
         .btn-pdf { background-color: #8b5cf6; color: white; }
+        .btn-generate { background-color: #f59e0b; color: white; }
+        
         .btn-clear { 
-            background-color: #fee2e2; 
-            color: var(--danger-color); 
-            padding: 0.4rem 0.8rem;
-            font-size: 0.8rem;
-            border: 1px solid #fecaca;
+            background-color: #fee2e2; color: var(--danger-color); 
+            padding: 0.4rem 0.8rem; font-size: 0.8rem; border: 1px solid #fecaca;
         }
         .btn-clear:hover { background-color: #fecaca; }
 
         button:hover:not(.btn-clear) { opacity: 0.9; transform: translateY(-1px); }
 
         /* --- MAIN LAYOUT --- */
-        main {
-            flex: 1;
-            padding: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            width: 100%;
-        }
+        main { flex: 1; padding: 2rem; max-width: 1200px; margin: 0 auto; width: 100%; }
 
-        /* Grid pour les paires Post-it + Saisie */
         .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
             gap: 2.5rem;
         }
 
-        .step-container {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
+        .step-container { display: flex; flex-direction: column; gap: 1.5rem; }
 
-        /* --- POST IT VISUEL --- */
+        /* --- POST IT --- */
         .post-it {
             background-color: var(--post-it-bg);
             padding: 1.5rem;
-            /* Coins légèrement arrondis */
-            border-radius: 2px; 
+            border-radius: 2px;
             box-shadow: 2px 4px 6px rgba(0,0,0,0.1);
             position: relative;
             transform: rotate(var(--rotation, 0deg)); 
@@ -130,355 +104,254 @@
             border-top: 1px solid rgba(255,255,255,0.4);
         }
 
-        /* Punaise */
         .post-it::after {
-            content: '';
-            position: absolute;
-            top: -6px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
+            content: ''; position: absolute; top: -6px; left: 50%; transform: translateX(-50%);
+            width: 14px; height: 14px; border-radius: 50%;
             background: radial-gradient(circle at 30% 30%, #ff6b6b, #c0392b);
-            box-shadow: 1px 2px 4px rgba(0,0,0,0.3);
-            z-index: 20;
+            box-shadow: 1px 2px 4px rgba(0,0,0,0.3); z-index: 20;
         }
 
         .post-it-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: #78350f;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px dashed rgba(120, 53, 15, 0.2);
-            background: rgba(255,255,255,0.3);
-            padding: 0.5rem;
-            border-radius: 4px;
-        }
-
-        .post-it-content {
-            font-size: 0.95rem;
-            color: #431407;
+            font-size: 1.1rem; font-weight: 700; color: #78350f; margin-bottom: 1rem;
+            padding-bottom: 0.5rem; border-bottom: 2px dashed rgba(120, 53, 15, 0.2);
+            background: rgba(255,255,255,0.3); padding: 0.5rem; border-radius: 4px;
         }
 
         .objective-box {
-            background: rgba(255,255,255,0.4);
-            padding: 0.8rem;
-            border-radius: 4px;
-            margin-bottom: 1rem;
+            background: rgba(255,255,255,0.4); padding: 0.8rem; border-radius: 4px; margin-bottom: 1rem;
             border-left: 3px solid #3b82f6;
         }
 
-        .objective-label {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            font-weight: 700;
-            color: #1e40af;
-            margin-bottom: 0.3rem;
-            display: block;
-        }
+        .objective-label { font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: #1e40af; display: block; margin-bottom: 0.3rem; }
 
-        .points-box ul {
-            list-style-type: none;
-            padding-left: 0;
-        }
-        
-        .points-box li {
-            position: relative;
-            padding-left: 1.2rem;
-            margin-bottom: 0.4rem;
-        }
-
-        .points-box li::before {
-            content: '•';
-            color: #10b981; /* Vert pour les points */
-            position: absolute;
-            left: 0;
-            font-weight: bold;
-        }
+        .points-box ul { list-style-type: none; padding-left: 0; }
+        .points-box li { position: relative; padding-left: 1.2rem; margin-bottom: 0.4rem; }
+        .points-box li::before { content: '•'; color: #10b981; position: absolute; left: 0; font-weight: bold; }
 
         /* --- ZONE DE SAISIE --- */
         .input-card {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            display: flex;
-            flex-direction: column;
-            gap: 0.8rem;
+            background: white; padding: 1.5rem; border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1); display: flex; flex-direction: column; gap: 0.8rem;
             border: 1px solid #e5e7eb;
         }
 
-        .input-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .input-label {
-            font-weight: 600;
-            color: #374151;
-            font-size: 0.9rem;
-        }
+        .input-header { display: flex; justify-content: space-between; align-items: center; }
+        .input-label { font-weight: 600; color: #374151; font-size: 0.9rem; }
 
         textarea {
-            width: 100%;
-            min-height: 200px; /* Saisie conséquente */
-            padding: 1rem;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-            font-family: 'Open Sans', sans-serif;
-            font-size: 1rem;
-            resize: vertical;
-            transition: border-color 0.2s;
+            width: 100%; min-height: 150px; padding: 1rem; border: 1px solid #d1d5db; border-radius: 6px;
+            font-family: 'Open Sans', sans-serif; font-size: 1rem; resize: vertical;
             background-color: #f9fafb;
         }
+        textarea:focus { outline: none; border-color: var(--primary-color); background-color: white; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
 
-        textarea:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            background-color: white;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        /* --- SECTION RECORDER --- */
+        #recorder-section {
+            margin-top: 4rem; padding: 2rem; background: white; border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); text-align: center;
         }
 
-        textarea::placeholder {
-            color: #9ca3af;
-            font-style: italic;
+        .recorder-title { margin-bottom: 1.5rem; font-size: 1.5rem; color: var(--header-bg); }
+        
+        .recorder-controls {
+            display: flex; justify-content: center; gap: 1.5rem; align-items: center; margin-bottom: 1.5rem;
         }
 
-        /* --- MODALS & TOASTS --- */
+        .btn-record {
+            background-color: var(--record-color); color: white; padding: 0.8rem 2rem;
+            border-radius: 50px; display: flex; align-items: center; gap: 0.5rem; font-size: 1rem;
+            box-shadow: 0 4px 6px rgba(220, 38, 38, 0.3);
+        }
+        
+        .btn-record.recording { animation: pulse 1.5s infinite; background-color: #991b1b; }
+        
+        .timer { font-family: monospace; font-size: 1.5rem; font-weight: 700; color: #6b7280; min-width: 100px; }
+
+        /* --- ZONE PROMPTEUR (TELEPROMPTER) --- */
+        #teleprompter-area {
+            display: none; /* Caché par défaut */
+            background-color: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            max-height: 300px;
+            overflow-y: auto;
+            text-align: left;
+        }
+
+        #teleprompter-area h3 {
+            font-size: 1rem;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 0.5rem;
+        }
+
+        #teleprompter-text {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #334155;
+            white-space: pre-wrap;
+        }
+
+        .audio-player-container {
+            max-width: 600px; margin: 20px auto 0; padding: 1rem;
+            background: #f3f4f6; border-radius: 8px; display: none;
+        }
+        
+        audio { width: 100%; margin-top: 10px; }
+
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+
+        /* --- MODALS --- */
         .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            backdrop-filter: blur(2px);
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center;
+            z-index: 1000; backdrop-filter: blur(2px);
         }
 
         .modal {
-            background: white;
-            padding: 2.5rem;
-            border-radius: 12px;
-            max-width: 600px;
-            width: 90%;
-            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2);
+            background: white; padding: 2rem; border-radius: 12px; max-width: 700px; width: 90%;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2); display: flex; flex-direction: column; gap: 1rem;
         }
 
-        .modal h2 { margin-bottom: 1rem; color: var(--header-bg); font-size: 1.5rem; }
-        .modal p { margin-bottom: 1rem; font-size: 1.05rem; color: #4b5563; }
-        .modal ul { margin-left: 1.5rem; margin-bottom: 1.5rem; }
-        
-        .close-modal {
-            background: var(--header-bg);
-            color: white;
-            width: 100%;
-            padding: 1rem;
-            font-size: 1rem;
+        .generated-text {
+            background: #f9fafb; border: 1px solid #e5e7eb; padding: 1.5rem; border-radius: 8px;
+            max-height: 60vh; overflow-y: auto; white-space: pre-wrap; font-family: 'Open Sans', sans-serif;
         }
+
+        .modal-actions { display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1rem; }
 
         #toast {
-            visibility: hidden;
-            min-width: 300px;
-            background-color: #374151;
-            color: #fff;
-            text-align: center;
-            border-radius: 8px;
-            padding: 16px;
-            position: fixed;
-            z-index: 200;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 600;
+            visibility: hidden; min-width: 300px; background-color: #374151; color: #fff;
+            text-align: center; border-radius: 8px; padding: 16px; position: fixed; z-index: 2000;
+            bottom: 30px; left: 50%; transform: translateX(-50%); font-weight: 600;
         }
-
-        #toast.show {
-            visibility: visible;
-            animation: fadein 0.5s, fadeout 0.5s 2.5s;
-        }
+        #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
 
         @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
         @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
 
-        /* --- RESPONSIVE & PRINT --- */
         @media (max-width: 768px) {
             .grid-container { grid-template-columns: 1fr; }
+            .recorder-controls { flex-direction: column; }
         }
-
+        
         @media print {
             body { background: white; -webkit-print-color-adjust: exact; }
-            header, .btn-clear, #toast, .modal-overlay, #intro-page { display: none !important; }
+            header, #recorder-section, .btn-clear, #toast, .modal-overlay, #intro-overlay { display: none !important; }
             main { padding: 0; margin: 0; max-width: 100%; }
-            
-            .grid-container {
-                display: block; /* Stack pour l'impression */
-                break-inside: avoid;
-            }
-
-            .step-container {
-                margin-bottom: 2rem;
-                page-break-inside: avoid;
-                break-inside: avoid;
-                flex-direction: row; /* Mettre Post-it et Saisie côte à côte si possible sur A4 */
-                gap: 1rem;
-            }
-
-            .post-it {
-                width: 45%;
-                box-shadow: none;
-                border: 1px solid #d97706;
-                min-height: auto;
-                transform: none !important;
-            }
-            
-            .post-it::after { display: none; } /* Pas de punaise à l'impression */
-
-            .input-card {
-                width: 55%;
-                box-shadow: none;
-                border: 1px solid #ccc;
-            }
-
-            textarea {
-                border: none;
-                resize: none;
-                height: auto; /* Adapter à la taille du contenu est difficile en CSS pur, on garde min-height */
-                min-height: 200px;
-                overflow: hidden; /* Masquer la scrollbar */
-            }
+            .grid-container { display: block; }
+            .step-container { flex-direction: row; page-break-inside: avoid; margin-bottom: 2rem; }
+            .post-it { width: 45%; transform: none !important; box-shadow: none; border: 1px solid #d97706; }
+            .post-it::after { display: none; }
+            .input-card { width: 55%; box-shadow: none; border: 1px solid #ccc; }
+            textarea { border: none; resize: none; height: auto; }
         }
 
-        /* ============================================================
-           PAGE D'INTRODUCTION — Ajout
-           ============================================================ */
-
-        /* Masquer le jeu tant que l'intro est active */
-        body.intro-active header,
-        body.intro-active main {
-            display: none !important;
-        }
-
-        #intro-page {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-            min-height: 100vh;
+        /* AJOUT INTRO - Début */
+        /* --- PAGE D'INTRODUCTION --- */
+        #intro-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: linear-gradient(135deg, #111827 0%, #1f2937 50%, #111827 100%);
-            position: relative;
-            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 3000;
+            padding: 1rem;
         }
 
-        #intro-page::before {
-            content: '';
-            position: absolute;
-            top: -40%;
-            right: -20%;
-            width: 600px;
-            height: 600px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 70%);
-            pointer-events: none;
-        }
-
-        #intro-page::after {
-            content: '';
-            position: absolute;
-            bottom: -30%;
-            left: -15%;
-            width: 500px;
-            height: 500px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(16,185,129,0.08) 0%, transparent 70%);
-            pointer-events: none;
-        }
-
-        .intro-content {
+        #intro-card {
             background: #ffffff;
             border-radius: 16px;
             padding: 3rem 2.5rem;
             max-width: 520px;
             width: 100%;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
-            position: relative;
-            z-index: 1;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
         }
 
-        .intro-title {
+        #intro-card h2 {
+            font-family: 'Montserrat', sans-serif;
             font-size: 1.6rem;
             font-weight: 700;
-            color: var(--header-bg);
-            text-align: center;
-            margin-bottom: 0.5rem;
+            color: #111827;
             line-height: 1.3;
         }
 
-        .intro-subtitle {
-            text-align: center;
+        #intro-card .intro-subtitle {
+            font-size: 0.9rem;
             color: #6b7280;
-            font-size: 0.95rem;
-            margin-bottom: 2rem;
+            margin-top: -0.5rem;
         }
 
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
-
-        .form-group {
+        .intro-fields {
             display: flex;
             flex-direction: column;
-            margin-bottom: 1.2rem;
+            gap: 1rem;
+            text-align: left;
         }
 
-        .form-group label {
+        .intro-field label {
+            display: block;
             font-family: 'Montserrat', sans-serif;
             font-size: 0.8rem;
-            font-weight: 700;
+            font-weight: 600;
+            color: #374151;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            color: #374151;
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.35rem;
         }
 
-        .form-group input {
+        .intro-field input {
+            width: 100%;
             padding: 0.75rem 1rem;
             border: 2px solid #e5e7eb;
-            border-radius: 6px;
+            border-radius: 8px;
             font-family: 'Open Sans', sans-serif;
-            font-size: 0.95rem;
-            color: var(--text-color);
-            background: #f9fafb;
-            transition: border-color 0.2s, box-shadow 0.2s;
+            font-size: 1rem;
+            color: #1f2937;
+            background-color: #f9fafb;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .intro-field input:focus {
             outline: none;
-        }
-
-        .form-group input::placeholder {
-            color: #9ca3af;
-        }
-
-        .form-group input:focus {
             border-color: var(--primary-color);
+            background-color: #ffffff;
             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
-            background: #ffffff;
+        }
+
+        .intro-field input.field-error {
+            border-color: var(--danger-color);
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+        }
+
+        .intro-error-msg {
+            font-size: 0.8rem;
+            color: var(--danger-color);
+            font-weight: 600;
+            display: none;
+            text-align: center;
         }
 
         .btn-start {
-            display: block;
-            width: 100%;
-            padding: 1rem;
-            background-color: var(--header-bg);
-            color: white;
+            background-color: var(--primary-color);
+            color: #ffffff;
+            padding: 0.9rem 2rem;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             font-family: 'Montserrat', sans-serif;
             font-size: 1rem;
             font-weight: 700;
@@ -488,93 +361,60 @@
         }
 
         .btn-start:hover {
-            background-color: #1f2937;
+            background-color: #2563eb;
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
         }
 
-        .btn-start:active {
-            transform: translateY(0);
+        .intro-micro-info {
+            font-size: 0.8rem;
+            color: #9ca3af;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
         }
-
-        /* Élément d'en-tête PDF — invisible à l'écran */
-        #print-header {
-            display: none;
-        }
-
-        /* Apparaît uniquement à l'impression */
-        @media print {
-            #print-header {
-                display: block !important;
-                padding: 1rem 0.5rem 1.5rem 0.5rem;
-                border-bottom: 3px solid #111827;
-                margin-bottom: 1.5rem;
-                font-family: 'Montserrat', sans-serif;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-            #print-header .print-title {
-                font-size: 1.3rem;
-                font-weight: 700;
-                color: #111827;
-                margin-bottom: 0.5rem;
-            }
-            #print-header .print-meta {
-                font-size: 0.85rem;
-                color: #4b5563;
-                line-height: 1.5;
-            }
-            #print-header .print-meta strong {
-                color: #111827;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .intro-content {
-                padding: 2rem 1.5rem;
-            }
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-            .intro-title {
-                font-size: 1.3rem;
-            }
-        }
+        /* AJOUT INTRO - Fin */
     </style>
 </head>
-<body class="intro-active">
+<body>
 
-<!-- ============================================================
-     PAGE D'INTRODUCTION — Ajout
-     ============================================================ -->
-<div id="intro-page">
-    <div class="intro-content">
-        <h1 class="intro-title">Activité Présentez vous – Elements Importants</h1>
-        <p class="intro-subtitle">Complétez vos informations avant de commencer l'activité.</p>
-        <form id="intro-form" onsubmit="return false;">
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="input-prenom">Prénom</label>
-                    <input type="text" id="input-prenom" placeholder="Votre prénom" required>
-                </div>
-                <div class="form-group">
-                    <label for="input-nom">Nom</label>
-                    <input type="text" id="input-nom" placeholder="Votre nom" required>
-                </div>
+<!-- AJOUT INTRO - Début -->
+<!-- PAGE D'INTRODUCTION -->
+<div id="intro-overlay">
+    <div id="intro-card">
+        <h2>Activité Présentez-vous – audio</h2>
+        <p class="intro-subtitle">Commencez par renseigner vos informations ci-dessous.</p>
+
+        <div class="intro-fields">
+            <div class="intro-field">
+                <label for="intro-nom">Nom</label>
+                <input type="text" id="intro-nom" placeholder="Votre nom" autocomplete="family-name">
             </div>
-            <div class="form-group">
-                <label for="input-formation">Formation</label>
-                <input type="text" id="input-formation" placeholder="Intitulé de votre formation" required>
+            <div class="intro-field">
+                <label for="intro-prenom">Prénom</label>
+                <input type="text" id="intro-prenom" placeholder="Votre prénom" autocomplete="given-name">
             </div>
-            <button type="button" class="btn-start" onclick="startActivity()">Commencer l'activité</button>
-        </form>
+            <div class="intro-field">
+                <label for="intro-formation">Formation</label>
+                <input type="text" id="intro-formation" placeholder="Ex : BTS SIO, Licence Pro…">
+            </div>
+        </div>
+
+        <p class="intro-error-msg" id="intro-error">Veuillez remplir tous les champs avant de continuer.</p>
+
+        <button class="btn-start" onclick="startWorkshop()">Commencer l'atelier</button>
+
+        <p class="intro-micro-info">🎤 L'enregistrement audio nécessite un micro</p>
     </div>
 </div>
+<!-- AJOUT INTRO - Fin -->
 
 <header>
-    <h1>Rédaction "Présentez-vous"</h1>
+    <h1>Atelier "Présentez-vous"</h1>
     <div class="controls">
         <button class="btn-info" onclick="showConsigne()">Consigne</button>
+        <button class="btn-generate" onclick="generatePresentation()">Synthétiser le texte</button>
         <button class="btn-reset" onclick="resetAll()">Tout effacer</button>
         <button class="btn-check" onclick="checkProgression()">Vérifier</button>
         <button class="btn-pdf" onclick="exportPDF()">Exporter PDF</button>
@@ -583,248 +423,329 @@
 
 <main>
     <div class="grid-container" id="board">
-        <!-- Le contenu sera généré par JavaScript ici -->
+        <!-- JS génèrera les post-its ici -->
     </div>
+
+    <!-- SECTION RECORDER AUDIO -->
+    <section id="recorder-section">
+        <h2 class="recorder-title">Enregistrez votre présentation</h2>
+        
+        <div class="recorder-controls">
+            <div class="timer" id="timer">00:00</div>
+            <button id="btn-record" class="btn-record" onclick="toggleRecording()">
+                <span id="record-icon">🎙️</span> <span id="record-text">Commencer l'enregistrement</span>
+            </button>
+        </div>
+        
+        <!-- ZONE DE LECTURE (TELEPROMPTEUR) APPARAIT LORS DE L'ENREGISTREMENT -->
+        <div id="teleprompter-area">
+            <h3>Votre texte à lire (Prompteur)</h3>
+            <div id="teleprompter-text"></div>
+        </div>
+        
+        <div id="audio-container" class="audio-player-container">
+            <h3>Votre enregistrement</h3>
+            <audio id="audio-playback" controls></audio>
+            <div style="margin-top:10px;">
+                <a id="download-link" style="color:var(--primary-color); text-decoration:none; font-weight:600;" href="#" download="ma_presentation.webm">⬇ Télécharger l'audio</a>
+            </div>
+        </div>
+    </section>
 </main>
 
 <!-- MODALE CONSIGNE -->
 <div id="modal-consigne" class="modal-overlay">
     <div class="modal">
-        <h2>Consigne de l'activité</h2>
-        <p>Bienvenue dans l'atelier de rédaction. Ici, pas de quiz, mais de la préparation concrète.</p>
-        <br>
-        <p><strong>Votre mission :</strong></p>
-        <ul>
-            <li>Lisez attentivement le contenu de chaque Post-it (Objectifs et Points clés).</li>
-            <li>Utilisez ces conseils pour rédiger votre propre texte dans la zone blanche située en dessous.</li>
-            <li>Soyez précis et personnel. Le champ est assez grand pour développer vos idées.</li>
-        </ul>
-        <br>
-        <p><strong>Outils :</strong></p>
-        <ul>
-            <li>Utilisez "Vérifier" pour voir votre avancement.</li>
-            <li>Utilisez le bouton rouge "Effacer" sous chaque zone pour corriger uniquement cette partie.</li>
-        </ul>
-        <button class="close-modal" onclick="closeConsigne()">Compris</button>
+        <h2>Consigne</h2>
+        <p>1. Rédigez votre présentation section par section.</p>
+        <p>2. Cliquez sur "Synthétiser le texte" pour voir le discours complet.</p>
+        <p>3. Cliquez sur "Commencer l'enregistrement" : le texte apparaîtra pour vous guider pendant l'enregistrement.</p>
+        <button class="btn-info" style="width:100%; margin-top:1rem;" onclick="closeConsigne()">Compris</button>
     </div>
 </div>
 
-<!-- TOAST NOTIFICATION -->
-<div id="toast">Message</div>
-
-<!-- EN-TÊTE PDF — Ajout (invisible à l'écran, visible uniquement à l'impression) -->
-<div id="print-header">
-    <div class="print-title">Activité Présentez vous – Elements Importants</div>
-    <div class="print-meta" id="print-meta"></div>
+<!-- MODALE TEXTE GENERE -->
+<div id="modal-text" class="modal-overlay">
+    <div class="modal">
+        <h2>Votre présentation complète</h2>
+        <div class="generated-text" id="full-presentation-text"></div>
+        <div class="modal-actions">
+            <button class="btn-info" onclick="closeModal('modal-text')">Fermer</button>
+            <button class="btn-generate" onclick="copyToClipboard()">Copier le texte</button>
+        </div>
+    </div>
 </div>
+
+<!-- TOAST -->
+<div id="toast">Message</div>
 
 <script>
     /* --- DONNEES --- */
     const gameData = [
-        {
-            id: 1,
-            title: "1. Accroche courte et identité professionnelle",
-            objective: "Donner immédiatement une image claire de qui vous êtes aujourd'hui.",
-            points: [
-                "Votre métier / rôle actuel ou récent",
-                "Votre niveau d'expérience",
-                "Votre spécialité ou valeur ajoutée"
-            ]
-        },
-        {
-            id: 2,
-            title: "2. Parcours résumé en 3 points clés",
-            objective: "Montrer un fil conducteur cohérent, sans raconter toute votre vie.",
-            points: [
-                "2 à 3 étapes significatives",
-                "Ce que vous avez appris ou développé",
-                "Ce qui vous a amené logiquement au poste visé"
-            ]
-        },
-        {
-            id: 3,
-            title: "3. Vos compétences fortes (ciblées pour le poste)",
-            objective: "Rassurer immédiatement sur votre capacité à être opérationnel.",
-            points: [
-                "2 compétences techniques essentielles",
-                "1 compétence comportementale différenciante",
-                "Illustrées par un mini‑exemple ou résultat concret"
-            ]
-        },
-        {
-            id: 4,
-            title: "4. Votre motivation spécifique pour le poste",
-            objective: "Montrer que vous n'êtes pas là par hasard.",
-            points: [
-                "Ce qui vous attire dans le poste",
-                "Ce que vous comprenez des enjeux",
-                "Le lien avec votre parcours ou vos valeurs"
-            ]
-        },
-        {
-            id: 5,
-            title: "5. Ce que vous apporterez à l'entreprise",
-            objective: "Vous projeter dans le rôle et montrer votre valeur ajoutée.",
-            points: [
-                "Votre contribution immédiate",
-                "Votre vision à moyen terme",
-                "Votre manière de travailler"
-            ]
-        },
-        {
-            id: 6,
-            title: "6. Une phrase de clôture simple et professionnelle",
-            objective: "Terminer avec assurance et ouverture.",
-            points: [
-                "Montrer que vous êtes prêt à poursuivre l'échange",
-                "Rester naturel"
-            ]
-        }
+        { id: 1, title: "1. Accroche courte et identité professionnelle", objective: "Donner immédiatement une image claire de qui vous êtes aujourd'hui.", points: ["Votre métier / rôle actuel ou récent", "Votre niveau d'expérience", "Votre spécialité ou valeur ajoutée"] },
+        { id: 2, title: "2. Parcours résumé en 3 points clés", objective: "Montrer un fil conducteur cohérent, sans raconter toute votre vie.", points: ["2 à 3 étapes significatives", "Ce que vous avez appris ou développé", "Ce qui vous a amené logiquement au poste visé"] },
+        { id: 3, title: "3. Vos compétences fortes (ciblées pour le poste)", objective: "Rassurer immédiatement sur votre capacité à être opérationnel.", points: ["2 compétences techniques essentielles", "1 compétence comportementale différenciante", "Illustrées par un mini‑exemple ou résultat concret"] },
+        { id: 4, title: "4. Votre motivation spécifique pour le poste", objective: "Montrer que vous n'êtes pas là par hasard.", points: ["Ce qui vous attire dans le poste", "Ce que vous comprenez des enjeux", "Le lien avec votre parcours ou vos valeurs"] },
+        { id: 5, title: "5. Ce que vous apporterez à l'entreprise", objective: "Vous projeter dans le rôle et montrer votre valeur ajoutée.", points: ["Votre contribution immédiate", "Votre vision à moyen terme", "Votre manière de travailler"] },
+        { id: 6, title: "6. Une phrase de clôture simple et professionnelle", objective: "Terminer avec assurance et ouverture.", points: ["Montrer que vous êtes prêt à poursuivre l'échange", "Rester naturel"] }
     ];
+
+    /* AJOUT INTRO - Début */
+    /* Variable globale stockant les informations saisies sur la page d'introduction */
+    let userInfo = { nom: '', prenom: '', formation: '' };
+
+    /**
+     * Valide les champs de l'intro, stocke les valeurs dans userInfo,
+     * masque l'overlay d'intro puis affiche la consigne.
+     */
+    function startWorkshop() {
+        const nomInput = document.getElementById('intro-nom');
+        const prenomInput = document.getElementById('intro-prenom');
+        const formationInput = document.getElementById('intro-formation');
+        const errorMsg = document.getElementById('intro-error');
+
+        const nom = nomInput.value.trim();
+        const prenom = prenomInput.value.trim();
+        const formation = formationInput.value.trim();
+
+        /* Réinitialiser les états d'erreur visuels */
+        nomInput.classList.remove('field-error');
+        prenomInput.classList.remove('field-error');
+        formationInput.classList.remove('field-error');
+        errorMsg.style.display = 'none';
+
+        /* Validation : au moins un champ vide */
+        if (!nom || !prenom || !formation) {
+            if (!nom) nomInput.classList.add('field-error');
+            if (!prenom) prenomInput.classList.add('field-error');
+            if (!formation) formationInput.classList.add('field-error');
+            errorMsg.style.display = 'block';
+            return;
+        }
+
+        /* Stockage des valeurs */
+        userInfo.nom = nom;
+        userInfo.prenom = prenom;
+        userInfo.formation = formation;
+
+        /* Masquer l'intro et afficher la consigne */
+        document.getElementById('intro-overlay').style.display = 'none';
+        showConsigne();
+    }
+
+    /**
+     * Nettoie une chaîne pour être utilisée comme nom de fichier sûr
+     * (remplace les caractères problématiques par des tirets bas).
+     */
+    function sanitizeForFilename(str) {
+        return str
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '') /* supprime les accents */
+            .replace(/[^a-zA-Z0-9_\-]/g, '_') /* remplace tout caractère non alphanumérique par _ */
+            .replace(/_+/g, '_') /* évite les doubles _ */
+            .replace(/^_|_$/g, ''); /* supprime les _ en début/fin */
+    }
+    /* AJOUT INTRO - Fin */
 
     /* --- INITIALISATION --- */
     function initGame() {
         const board = document.getElementById('board');
         board.innerHTML = '';
-
         gameData.forEach(section => {
+            const rotation = (Math.random() * 2 - 1).toFixed(1) + 'deg'; 
             const container = document.createElement('div');
             container.className = 'step-container';
-
-            // Rotation aléatoire légère pour le post-it
-            const rotation = (Math.random() * 2 - 1).toFixed(1) + 'deg'; 
-
-            // Construction du HTML de la section
             container.innerHTML = `
-                <!-- POST-IT VISUEL -->
                 <div class="post-it" style="--rotation: ${rotation}">
                     <div class="post-it-title">${section.title}</div>
                     <div class="post-it-content">
-                        <div class="objective-box">
-                            <span class="objective-label">Objectif</span>
-                            ${section.objective}
-                        </div>
-                        <div class="points-box">
-                            <span class="objective-label" style="color:#059669">Points à aborder</span>
-                            <ul>
-                                ${section.points.map(pt => `<li>${pt}</li>`).join('')}
-                            </ul>
-                        </div>
+                        <div class="objective-box"><span class="objective-label">Objectif</span>${section.objective}</div>
+                        <div class="points-box"><span class="objective-label" style="color:#059669">Points à aborder</span><ul>${section.points.map(pt => `<li>${pt}</li>`).join('')}</ul></div>
                     </div>
                 </div>
-
-                <!-- ZONE DE SAISIE -->
                 <div class="input-card">
-                    <div class="input-header">
-                        <span class="input-label">Votre rédaction pour cette partie :</span>
-                        <button class="btn-clear" onclick="clearSingleInput('area-${section.id}')">Effacer</button>
-                    </div>
-                    <textarea id="area-${section.id}" placeholder="Rédigez ici votre proposition..."></textarea>
-                </div>
-            `;
-
+                    <div class="input-header"><span class="input-label">Votre texte :</span><button class="btn-clear" onclick="clearSingleInput('area-${section.id}')">Effacer</button></div>
+                    <textarea id="area-${section.id}" placeholder="Rédigez ici..."></textarea>
+                </div>`;
             board.appendChild(container);
         });
     }
 
-    /* --- ACTIONS --- */
-    
-    function clearSingleInput(textareaId) {
-        const area = document.getElementById(textareaId);
-        if(area && area.value.trim() !== "") {
-            if(confirm("Voulez-vous vraiment effacer le contenu de cette zone ?")) {
-                area.value = "";
-                showToast("Zone effacée");
-            }
-        }
-    }
-
-    function resetAll() {
-        if(confirm("Voulez-vous vraiment effacer TOUTES vos rédactions ? Cette action est irréversible.")) {
-            const textareas = document.querySelectorAll('textarea');
-            textareas.forEach(t => t.value = "");
-            showToast("Tout a été effacé");
-        }
-    }
-
-    function checkProgression() {
-        const textareas = document.querySelectorAll('textarea');
-        let filledCount = 0;
-        let totalCount = textareas.length;
-
-        textareas.forEach(t => {
-            if(t.value.trim().length > 20) { // Considère rempli si > 20 caractères
-                filledCount++;
+    /* --- LOGIQUE GENERATION TEXTE --- */
+    function getFullTextContent() {
+        let fullText = "";
+        let isEmpty = true;
+        
+        gameData.forEach(section => {
+            const val = document.getElementById(`area-${section.id}`).value.trim();
+            if(val) {
+                fullText += `[${section.title}]\n\n${val}\n\n`;
+                isEmpty = false;
             }
         });
 
-        let msg = "";
-        if(filledCount === totalCount) {
-            msg = "Excellent ! Toutes les sections sont remplies.";
-        } else if (filledCount === 0) {
-            msg = "Vous n'avez pas encore commencé la rédaction.";
-        } else {
-            msg = `Progression : ${filledCount}/${totalCount} sections remplies.`;
-        }
-
-        showToast(msg);
+        if (isEmpty) return "Aucun texte rédigé pour le moment.";
+        return fullText;
     }
 
-    /* --- UTILITAIRES --- */
-
-    /* --- PAGE D'INTRODUCTION — Ajout --- */
-    function startActivity() {
-        var prenom = document.getElementById('input-prenom').value.trim();
-        var nom = document.getElementById('input-nom').value.trim();
-        var formation = document.getElementById('input-formation').value.trim();
-
-        if (!prenom || !nom || !formation) {
-            showToast("Veuillez remplir tous les champs.");
+    function generatePresentation() {
+        const fullText = getFullTextContent();
+        if (fullText === "Aucun texte rédigé pour le moment.") {
+            showToast("Rédigez d'abord du contenu dans les zones ci-dessus !");
             return;
         }
 
-        // Stocker les données de l'utilisateur pour l'export PDF
-        window._userData = { prenom: prenom, nom: nom, formation: formation };
-
-        // Retirer la classe qui masque le jeu, masquer l'intro
-        document.body.classList.remove('intro-active');
-        document.getElementById('intro-page').style.display = 'none';
+        document.getElementById('full-presentation-text').textContent = fullText;
+        document.getElementById('modal-text').style.display = 'flex';
     }
-    /* --- FIN PAGE D'INTRODUCTION --- */
+
+    function copyToClipboard() {
+        const text = document.getElementById('full-presentation-text').textContent;
+        navigator.clipboard.writeText(text).then(() => {
+            showToast("Texte copié !");
+        });
+    }
+
+    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+    /* --- LOGIQUE ENREGISTREMENT AUDIO --- */
+    let mediaRecorder;
+    let audioChunks = [];
+    let recordStartTime;
+    let timerInterval;
+    let isRecording = false;
+
+    async function toggleRecording() {
+        if (!isRecording) {
+            await startRecording();
+        } else {
+            stopRecording();
+        }
+    }
+
+    async function startRecording() {
+        // Afficher le prompteur AVANT de commencer
+        const textToShow = getFullTextContent();
+        const teleprompterArea = document.getElementById('teleprompter-area');
+        const teleprompterText = document.getElementById('teleprompter-text');
+        
+        teleprompterText.textContent = textToShow;
+        teleprompterArea.style.display = 'block';
+
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+            showToast("Votre navigateur ne supporte pas l'enregistrement audio.");
+            return;
+        }
+
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            mediaRecorder = new MediaRecorder(stream);
+            audioChunks = [];
+
+            mediaRecorder.ondataavailable = event => {
+                audioChunks.push(event.data);
+            };
+
+            mediaRecorder.onstop = () => {
+                const audioBlob = new Blob(audioChunks, { type: 'audio/webm' }); 
+                const audioUrl = URL.createObjectURL(audioBlob);
+                
+                const audioEl = document.getElementById('audio-playback');
+                audioEl.src = audioUrl;
+                
+                const downloadLink = document.getElementById('download-link');
+                downloadLink.href = audioUrl;
+
+                /* MODIF INTRO - Début */
+                /* Construction du nom de fichier avec nom, prénom, formation et date */
+                const dateStr = new Date().toISOString().slice(0, 10);
+                const safeNom = sanitizeForFilename(userInfo.nom);
+                const safePrenom = sanitizeForFilename(userInfo.prenom);
+                const safeFormation = sanitizeForFilename(userInfo.formation);
+                downloadLink.download = `PresentezVous_${safeNom}_${safePrenom}_${safeFormation}_${dateStr}.webm`;
+                /* MODIF INTRO - Fin */
+
+                document.getElementById('audio-container').style.display = 'block';
+            };
+
+            mediaRecorder.start();
+            isRecording = true;
+            
+            // UI Update
+            const btn = document.getElementById('btn-record');
+            btn.classList.add('recording');
+            document.getElementById('record-text').textContent = "Arrêter l'enregistrement";
+            document.getElementById('record-icon').textContent = "⏹";
+            
+            // Timer
+            recordStartTime = Date.now();
+            timerInterval = setInterval(updateTimer, 1000);
+            
+            document.getElementById('audio-container').style.display = 'none';
+
+        } catch (err) {
+            console.error(err);
+            showToast("Erreur : Accès au micro refusé ou impossible.");
+        }
+    }
+
+    function stopRecording() {
+        if(mediaRecorder && mediaRecorder.state !== 'inactive') {
+            mediaRecorder.stop();
+            mediaRecorder.stream.getTracks().forEach(track => track.stop());
+        }
+        
+        isRecording = false;
+        clearInterval(timerInterval);
+        
+        const btn = document.getElementById('btn-record');
+        btn.classList.remove('recording');
+        document.getElementById('record-text').textContent = "Réenregistrer";
+        document.getElementById('record-icon').textContent = "🎙️";
+        
+        // On laisse le teleprompter ouvert pour relecture
+    }
+
+    function updateTimer() {
+        const diff = Math.floor((Date.now() - recordStartTime) / 1000);
+        const m = Math.floor(diff / 60).toString().padStart(2, '0');
+        const s = (diff % 60).toString().padStart(2, '0');
+        document.getElementById('timer').textContent = `${m}:${s}`;
+    }
+
+    /* --- UTILS --- */
+    function clearSingleInput(id) {
+        const area = document.getElementById(id);
+        if(area && area.value.trim() !== "") {
+            if(confirm("Effacer cette zone ?")) { area.value = ""; showToast("Zone effacée"); }
+        }
+    }
+    function resetAll() {
+        if(confirm("Tout effacer ?")) {
+            document.querySelectorAll('textarea').forEach(t => t.value = "");
+            document.getElementById('audio-container').style.display = 'none';
+            document.getElementById('teleprompter-area').style.display = 'none'; // Cacher le prompteur au reset
+            document.getElementById('timer').textContent = "00:00";
+            showToast("Réinitialisation complète");
+        }
+    }
+    function checkProgression() {
+        const count = Array.from(document.querySelectorAll('textarea')).filter(t => t.value.trim().length > 20).length;
+        showToast(`Progression : ${count}/6 sections remplies`);
+    }
+    function exportPDF() { window.print(); }
+    function showConsigne() { document.getElementById('modal-consigne').style.display = 'flex'; }
+    function closeConsigne() { document.getElementById('modal-consigne').style.display = 'none'; }
     
-    function showConsigne() {
-        document.getElementById('modal-consigne').style.display = 'flex';
+    function showToast(msg) {
+        const t = document.getElementById("toast");
+        t.textContent = msg; t.className = "show";
+        setTimeout(() => t.className = t.className.replace("show", ""), 3000);
     }
 
-    function closeConsigne() {
-        document.getElementById('modal-consigne').style.display = 'none';
-    }
-
-    /* Modification de exportPDF — exigée par la demande d'afficher nom, prénom, formation et date sur le PDF */
-    function exportPDF() {
-        var data = window._userData || {};
-        var today = new Date();
-        var jour = String(today.getDate()).padStart(2, '0');
-        var mois = String(today.getMonth() + 1).padStart(2, '0');
-        var annee = today.getFullYear();
-        var dateStr = jour + '/' + mois + '/' + annee;
-
-        var printMeta = document.getElementById('print-meta');
-        printMeta.innerHTML = '<strong>' + data.prenom + ' ' + data.nom + '</strong> &mdash; Formation : ' + data.formation + '<br>Date : ' + dateStr;
-
-        window.print();
-    }
-
-    function showToast(message) {
-        const toast = document.getElementById("toast");
-        toast.textContent = message;
-        toast.className = "show";
-        setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
-    }
-
-    // Lancement
     window.onload = function() {
         initGame();
+        /* MODIF INTRO - Remplacement de showConsigne() par l'affichage de l'intro (showConsigne est appelé depuis startWorkshop après validation) */
     };
 </script>
 
